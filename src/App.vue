@@ -1,23 +1,28 @@
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+  <v-app class="grey lighten-4">
+    <NavBar />
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-content transition="slide-x-transition">
+            <router-view></router-view>
+          </v-content>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
+<script>
+import NavBar from '@/components/NavBar.vue';
+
+export default {
+  name: 'App',
+  components: {
+    NavBar,
+  },
+};
+</script>
+
 <style>
-#app {
-  font-family: Palatino, Palatino LT STD, sans-serif;
-}
-
-html,
-body,
-#app {
-  height: 100%;
-}
-
-body {
-  background-color: #ddd;
-  margin: 0;
-  height: 100%;
-}
 </style>

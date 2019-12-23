@@ -47,6 +47,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    addTime: (context, newTime) => {
+      context.commit('ADD_TIME', newTime);
+    },
     removeTime: (context, time) => {
       context.commit('REMOVE_TIME', time);
     },
