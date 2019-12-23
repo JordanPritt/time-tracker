@@ -14,6 +14,13 @@ module.exports = {
     'global-require': 0,
     'eslint linebreak-style': [0, 'error', 'windows'],
     'max-len': 0,
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "only-multiline"
+    }]
   },
   parserOptions: {
     parser: 'babel-eslint',

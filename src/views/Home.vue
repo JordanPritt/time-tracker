@@ -16,6 +16,7 @@
             </small>
           </v-card-title>
           <WeeklyChart />
+          <LineChartContainer />
         </v-card>
       </v-col>
     </v-row>
@@ -23,15 +24,23 @@
 </template>
 
 <script>
+import LineChartContainer from '@/components/Charts/LineChartContainer.vue';
 import WeeklyChart from '@/components/WeeklyChart.vue';
 
 export default {
   name: 'home',
   components: {
     WeeklyChart,
+    LineChartContainer,
   },
   data() {
-    return { currentWeek: 40, previousWeek: 40 };
+    return {
+      currentWeek: 40,
+      previousWeek: 40,
+      loading: true,
+      error: null,
+      workedData: null,
+    };
   },
 };
 </script>
