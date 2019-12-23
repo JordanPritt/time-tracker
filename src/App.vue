@@ -1,15 +1,9 @@
 <template>
   <v-app class="grey lighten-4">
     <NavBar />
-    <v-container>
-      <v-row>
-        <v-col>
-          <v-content transition="slide-x-transition">
-            <router-view></router-view>
-          </v-content>
-        </v-col>
-      </v-row>
-    </v-container>
+    <v-content transition="slide-x-transition">
+      <router-view></router-view>
+    </v-content>
   </v-app>
 </template>
 

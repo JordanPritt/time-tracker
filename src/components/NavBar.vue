@@ -19,7 +19,7 @@
       </v-list-item>
 
       <v-list shaped class="list-center">
-        <v-list-item-group v-model="item" color="primary">
+        <v-list-item-group color="primary">
           <v-list-item v-for="item in items" :key="item.title" link>
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
