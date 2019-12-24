@@ -16,8 +16,9 @@
             </small>
           </v-card-title>
           <WeeklyChart />
-          <LineChartContainer />
         </v-card>
+        <br />
+        <LineChartContainer />
       </v-col>
     </v-row>
   </v-container>

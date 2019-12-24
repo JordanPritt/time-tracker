@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <v-card class="container">
     <LineChart v-if="loaded" :chartdata="chartdata" :options="options" />
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -12,20 +12,28 @@ export default {
   components: { LineChart },
   data: () => ({
     loaded: false,
-    chartdata: null,
+    chartdata: {
+      labels: '',
+      datasets: [],
+    },
+    options: null,
   }),
   async mounted() {
     this.loaded = false;
     try {
       const daysWorked = await fetch(
-        'https://localhost:5001/api/timeworked',
+        'https://localhost:5001/api/timeworked'
       ).then(r => r.json());
-      console.log('days worked data:', daysWorked);
-      this.chartdata = daysWorked;
+      const options = await fetch(
+        'https://localhost:5001/api/timeworked/default'
+      ).then(r => r.json());
+      this.chartdata.labels = daysWorked.labels;
+      this.chartdata.datasets = daysWorked.data;
+
+      this.options = options;
       this.loaded = true;
     } catch (e) {
       console.error("Couldn't access data:", e);
-      // console.log('response data:', e.response.data);
     }
   },
 };
