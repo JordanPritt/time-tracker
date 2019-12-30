@@ -20,7 +20,7 @@
 
       <v-list shaped class="list-center">
         <v-list-item-group color="primary">
-          <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item v-for="item in items" :key="item.title" :to="item.link">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -41,11 +41,11 @@ export default {
     return {
       drawer: true,
       items: [
-        { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-        { title: 'My Account', icon: 'mdi-account' },
-        { title: 'Reports', icon: 'mdi-chart-bar' },
-        { title: 'Current Week', icon: 'mdi-calendar-clock' },
-        { title: 'Running Total', icon: 'mdi-timetable' },
+        { title: 'Dashboard', link: '/', icon: 'mdi-view-dashboard' },
+        { title: 'My Account', link: '/account', icon: 'mdi-account' },
+        { title: 'Reports', link: '/reports', icon: 'mdi-chart-bar' },
+        { title: 'Current Week', link: '/current', icon: 'mdi-calendar-clock' },
+        { title: 'Running Total', link: '/total', icon: 'mdi-timetable' },
       ],
     };
   },

@@ -1,67 +1,75 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    title: 'My Custom Title',
-    timeList: [
-      {
-        title: 'UI Modification',
-        type: 'Development',
-        date: '12/05/2019',
-        start: '8:00am',
-        end: '4:30pm',
-      },
-      {
-        title: 'Change Request',
-        type: 'Maintenance',
-        date: '12/06/2019',
-        start: '8:00am',
-        end: '4:30pm',
-      },
-      {
-        title: 'Performance Optimization',
-        type: 'Development',
-        date: '12/9/2019',
-        start: '8:00am',
-        end: '4:30pm',
-      },
-    ],
+    status: '',
+    token: localStorage.getItem('token') || '',
+    user: {},
   },
   mutations: {
-    ADD_TIME: (state, newTime) => {
-      state.timeList.push(newTime);
+    auth_request(state) {
+      state.status = 'loading';
     },
-    REMOVE_TIME: (state, time) => {
-      state.timeList.splice(time, 1);
+    auth_success(state, token, user) {
+      state.status = 'success';
+      state.token = token;
+      state.user = user;
     },
-    REMOVE_ALL: (state) => {
-      state.timeList = [];
+    auth_error(state) {
+      state.status = 'error';
     },
-  },
-  getters: {
-    allTimeItems(state) {
-      return state.timeList;
+    logout(state) {
+      state.status = '';
+      state.token = '';
     },
   },
   actions: {
-    addTime: (context, newTime) => {
-      context.commit('ADD_TIME', newTime);
+    login({ commit }, user) {
+      commit('auth_request');
+      axios({ url: 'http://localhost:5000/api/v1/login', data: user, method: 'POST' })
+        .then()
+        .catch((err, reject) => {
+          commit('auth_error');
+          localStorage.removeItem('token');
+          reject(err);
+        });
     },
-    removeTime: (context, time) => {
-      context.commit('REMOVE_TIME', time);
-    },
-    removeAll({ commit }) {
+    // login({ commit }, user) {
+    //   return new Promise((resolve, reject) => {
+    //     commit('auth_request');
+    //     axios({ url: 'http://localhost:5000/api/v1/login', data: user, method: 'POST' })
+    //       .then((resp) => {
+    //         const { token } = resp.data;
+    //         // eslint-disable-next-line no-shadow
+    //         const { user } = resp.data;
+    //         localStorage.setItem('token', token);
+    //         axios.defaults.headers.common.Authorization = token;
+    //         commit('auth_success', token, user);
+    //         resolve(resp);
+    //       })
+    //       .catch((err) => {
+    //         console.log('err:', err);
+    //         commit('auth_error');
+    //         localStorage.removeItem('token');
+    //         reject(err);
+    //       });
+    //   });
+    // },
+    logout({ commit }) {
       return new Promise((resolve) => {
-        setTimeout(() => {
-          commit('REMOVE_ALL');
-          resolve();
-        }, 1500);
+        commit('logout');
+        localStorage.removeItem('token');
+        delete axios.defaults.headers.common.Authorization;
+        resolve();
       });
     },
   },
-  modules: {
+  getters: {
+    isLoggedIn: state => !!state.token,
+    authStatus: state => state.status,
   },
 });
