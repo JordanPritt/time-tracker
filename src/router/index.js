@@ -12,7 +12,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      guest: true,
+      requiresAuth: true,
     },
   },
   {
@@ -70,7 +70,7 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/login') {
     next();
   } else if (to.matched.some(r => r.meta.requiresAuth)) {
-    if (localStorage.getItem('jwt') == null) {
+    if (localStorage.getItem('token') == null) {
       if (to.path !== '/login') {
         next('/login');
       } else {

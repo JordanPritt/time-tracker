@@ -3,10 +3,18 @@
     <v-toolbar>
       <v-toolbar-title>Time Tracker</v-toolbar-title>
       <v-spacer />
-      <v-btn class="ml-4 mr-4 primary">
-        <span>Sign Out</span>
-        <v-icon>mdi-exit-to-app</v-icon>
-      </v-btn>
+      <div v-if="signedIn">
+        <v-btn  class="ml-4 mr-4 primary" @click="logout">
+          <span>Sign Out</span>
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
+      </div>
+      <div v-else>
+        <v-btn class="ml-4 mr-4 primary" @click="$router.push('/login')">
+          <span>Sign In</span>
+          <v-icon>mdi-login</v-icon>
+        </v-btn>
+      </div>
     </v-toolbar>
 
     <v-navigation-drawer app v-model="drawer" permanent>
@@ -48,6 +56,17 @@ export default {
         { title: 'Running Total', link: '/total', icon: 'mdi-timetable' },
       ],
     };
+  },
+  computed: {
+    signedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+        .then(() => this.$router.push('/login'));
+    },
   },
 };
 </script>

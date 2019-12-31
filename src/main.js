@@ -7,6 +7,7 @@ import store from './store';
 import vuetify from './plugins/vuetify';
 import '@babel/polyfill';
 
+Vue.prototype.$log = console.log();
 Vue.prototype.$http = Axios;
 const token = localStorage.getItem('token');
 
