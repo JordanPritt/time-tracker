@@ -1,65 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Login from '../views/Login.vue';
-import NotFound from '../components/NotFound.vue';
+import routes from './routes';
 
 Vue.use(VueRouter);
-
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/account',
-    name: 'account',
-    component: Home,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/reports',
-    name: 'reports',
-    component: Home,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/current',
-    name: 'current',
-    component: Home,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/total',
-    name: 'total',
-    component: Home,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '*',
-    component: NotFound,
-  },
-];
 
 const router = new VueRouter({
   mode: 'history',
