@@ -14,6 +14,16 @@ const mutations = {
     state.status = '';
     state.token = null;
   },
+  account_request(state) {
+    state.status = 'loading';
+  },
+  account_success(state, user) {
+    state.status = 'loading';
+    state.user = user;
+  },
+  account_error(state) {
+    state.status = 'error';
+  },
 };
 
 export default mutations;

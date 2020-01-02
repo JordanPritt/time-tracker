@@ -6,9 +6,8 @@ const actions = {
       commit('auth_request');
       axios({ url: 'http://localhost:5000/api/v1/login', data: user, method: 'POST' })
         .then((resp) => {
-          const { token } = resp.data;
           // eslint-disable-next-line no-shadow
-          const { user } = resp.data;
+          const { token, user } = resp.data;
           localStorage.setItem('token', token);
           axios.defaults.headers.common.Authorization = token;
           commit('auth_success', token, user);
@@ -28,6 +27,20 @@ const actions = {
       localStorage.removeItem('token');
       delete axios.defaults.headers.common.Authorization;
       resolve();
+    });
+  },
+  getAccountDetails({ commit }) {
+    return new Promise((resolve, reject) => {
+      commit('account_request');
+      axios({ url: 'http://localhost:5000/api/v1/account', method: 'GET' })
+        .then((resp) => {
+          commit('account_success', resp.user);
+          resolve(resp);
+        })
+        .catch((err) => {
+          commit('account_error');
+          reject(err);
+        });
     });
   },
 };
