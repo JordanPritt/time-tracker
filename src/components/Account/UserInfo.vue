@@ -31,6 +31,7 @@ export default {
   name: 'userinfo',
   data() {
     return {
+      loading: false,
       firstname: 'admin',
       lastname: 'admin',
       email: 'fake@test.com',
@@ -42,6 +43,38 @@ export default {
         'hold',
       ],
     };
+  },
+  created() {
+    this.getAccountDetails();
+  },
+  watch: {
+    $route: 'getAccountDetails',
+  },
+  methods: {
+    async getAccountDetails() {
+      try {
+        this.loading = true;
+        // { headers: { Authorization: `Bearer ${this.$store.getters.token}` } }
+        const details = await this.$http.get('http://localhost:5000/api/v1/account')
+          .then((response) => {
+            console.log(response);
+          }, (error) => {
+            console.log(error);
+          });
+        if (details) {
+          this.firstname = details.firstName;
+          this.lastname = details.lastName;
+          this.email = details.email;
+          this.status = details.status;
+          this.loading = false;
+        } else {
+          this.loading = true;
+        }
+      } catch (e) {
+        const err = e.toString();
+        console.log(err);
+      }
+    },
   },
 };
 </script>
